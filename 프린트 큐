@@ -1,0 +1,20 @@
+from collections import deque
+
+t = int(input()) #문서 큐 갯수
+for _ in range(t):
+    n, m = map(int, input().split()) # 문서 갯수 , 특정 문서의 인덱스
+    number_arr = deque(list(map(int, input().split()))) # 문서들 배열 할당 데큐로 만들어 주기
+    index_arr = deque([i for i in range(n)]) #문서의 갯수를 인덱스를 데큐로 부여
+
+    cnt = 0
+    while True:
+        if number_arr[0] == max(number_arr): #number들중 max라면
+            cnt += 1 #cnt증가
+            if index_arr[0] == m: #특정문서의 인덱스가 배열 첫번째를 가르키는 경우
+                print(cnt) #cnt 출력
+                break
+            number_arr.popleft() #배열 숫자 배열인덱스 다지우기
+            index_arr.popleft()
+        else:
+            number_arr.append(number_arr.popleft())#아닌 경우 지우고 뒤로 옮기기
+            index_arr.append(index_arr.popleft())
