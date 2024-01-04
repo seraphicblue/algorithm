@@ -1,0 +1,26 @@
+# 큐를 두개 사용하라는 전제 조건이 있었음 
+import collections
+
+class MyQueue:
+
+    def __init__(self):
+        self.input = collections.deque()
+        self.output = collections.deque()
+
+    def push(self, x: int) -> None:
+        self.input.append(x)
+
+    def pop(self) -> int:
+        if not self.output:
+            while self.input:
+                self.output.append(self.input.popleft())
+        return self.output.popleft()
+
+    def peek(self) -> int:
+        if not self.output:
+            while self.input:
+                self.output.append(self.input.popleft())
+        return self.output[0]
+
+    def empty(self) -> bool:
+        return not self.input and not self.output
