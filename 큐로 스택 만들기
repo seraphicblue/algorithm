@@ -1,0 +1,29 @@
+
+import collections
+
+class MyStack:
+    def __init__(self):
+        self.que1 = collections.deque()
+        self.que2 = collections.deque()
+
+    def push(self, x: int) -> None:
+        self.que1.append(x) # 한쪽 큐에 저장 
+
+    def pop(self) -> int:
+        while len(self.que1) >= 2: # 큐의 길이가 2 이상일때
+            self.que2.append(self.que1.popleft()) # que1요소를 제거하며 que2로 옮김
+        last_item = self.que1.popleft()  # 마지막 요소 제거 
+        self.que1, self.que2 = self.que2, self.que1  # que2에 있는 요소들 다시 que1으로 옮김
+        return last_item
+
+    def top(self) -> int:
+        while len(self.que1) >= 2:  # 큐의 길이가 2개 이상일때
+            self.que2.append(self.que1.popleft())  # que1요소를 제거하며 que2로 옮김
+        last_item = self.que1[0]  # 마지막 요소 저장하지만 제거하지 않음
+        self.que2.append(self.que1.popleft())  #last item이 que1에 남아있으므로 마지막 남은 요소 역시 
+                                               #que2로 옮김 
+        self.que1, self.que2 = self.que2, self.que1  # que2에 있는 요소들 다시 que1으로 옮김
+        return last_item
+
+    def empty(self) -> bool:
+        return len(self.que1) == 0  # 큐가 비어 있는지 확인
