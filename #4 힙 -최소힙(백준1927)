@@ -1,0 +1,19 @@
+#먼저 배열 갯수 생성 -> for 문
+#0이 들어가면 배열에서 가장 작은수 출력하면서 제거 -> heppop
+#자연수이면 배열에 x라는 값 집어 넣기 ->heappush
+
+import heapq
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+heap = []
+for _ in range(N):
+    x = int(input())  # 각 반복에서 입력 받기
+    if x == 0:
+        if not heap:  # 힙이 비어있는 경우
+            print(0)
+        else:  # 힙에서 최솟값 출력 및 제거
+            print(heapq.heappop(heap))
+    else:
+        heapq.heappush(heap, x)  # 힙에 요소 추가
