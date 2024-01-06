@@ -1,0 +1,17 @@
+import heapq
+import sys
+input = sys.stdin.readline
+
+class Solution:
+    heap = []
+    circle=int(input())
+    for _ in range(circle):
+        can=int(input())
+        if can==0:
+            if not heap:
+                print(0)
+            else:
+                largest=-heapq.heappop(heap)
+                print(largest)
+        else:
+            heapq.heappush(heap, -can)
