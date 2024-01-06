@@ -1,0 +1,19 @@
+#for문을 통해 밖의 list의 갯수=len(mat)만큼 돌려 줄을 구분한다 
+#우선 안의 list내용 각각 합산한다 또는 1을 찾아도된다 
+#힙에 인덱스와 함께 저장한다 
+#for문에  해서 value를 추출한다 []
+class Solution:
+    def kWeakestRows(self, mat: List[List[int]], k: int) -> List[int]:
+        heap = [] #힙영역
+        result = []
+        for i,v in enumerate(mat):
+               heapq.heappush(heap,(sum(mat[i]),i))
+          
+
+        for j in range(k):
+            result.append(heapq.heappop(heap)[0])
+
+        return result
+
+         
+              
