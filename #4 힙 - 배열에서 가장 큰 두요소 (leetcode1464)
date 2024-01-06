@@ -1,0 +1,5 @@
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        arr_fixtwo=heapq.nlargest(2, nums, key=None)
+        
+        return (arr_fixtwo[0]-1)*(arr_fixtwo[1]-1)
