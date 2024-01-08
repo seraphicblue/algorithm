@@ -1,0 +1,25 @@
+from typing import Optional
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+class Solution:
+    def __init__(self):
+        self.head = None
+
+    def prepend(self, val):
+        if not self.head:#리스트에 헤드가 없을 때
+            self.head = ListNode(val, None)
+        else:# 리스트에 헤드가 있을 때
+            node = ListNode(val, self.head)
+            self.head = node
+
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        result = Solution()#인스턴스 생성
+        while head:#헤드에 노드가 존재할때 
+            result.prepend(head.val)# result에 head.value 붙임
+            head = head.next #헤드에 다음헤드 할당 
+
+        return result.head #인스턴스 헤드 할당 
