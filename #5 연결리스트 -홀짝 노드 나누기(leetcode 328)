@@ -1,0 +1,32 @@
+class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        #pre 값 설정하기 
+        prehead = ListNode(-1)
+
+        # 새list를 위한 포인터 
+        prev = prehead
+
+        # 두 배열 합치기
+        while list1 and list2:
+            if list1.val < list2.val: 
+                prev.next = list1
+                list1 = list1.next
+            elif list1.val > list2.val:
+                prev.next = list2
+                list2 = list2.next
+            else:
+                prev.next = list1
+                list1 = list1.next
+                prev = prev.next  # 두 번째 동일한 값을 추가
+                prev.next = list2
+                list2 = list2.next
+
+            prev = prev.next
+
+        # 남은 노드들 병합
+        if list1:
+            prev.next = list1
+        if list2:
+            prev.next = list2
+
+        return prehead.next
