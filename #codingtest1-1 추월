@@ -1,0 +1,26 @@
+
+
+class Solution:
+    N=int(input())# 차량 갯수
+    input_list = []# 들어간 차량 리스트
+    cnt = 0 #추월 차량 셀 변수
+    output_list = []# 터널에서 나온 리스트
+
+
+    for _ in range(N):# 차량 갯수 만큼 순서대로 들어간 리스트에 입력
+        car_num_in =input()
+        input_list.append(car_num_in)
+
+    for _ in range(N):
+        car_num_out=input()
+        output_list.append(car_num_out)
+
+    for i in range(N):
+        if input_list[i] != output_list[i]: #차량을 순서대로 빼면서 비교
+            pick = input_list[i] #비교군 선정
+            for j in range(N):
+                pick != output_list[i]  # 일치하지 않은 만큼 갯수 = 추월 차량 갯수
+                cnt += 1
+            break
+
+    print(cnt)
