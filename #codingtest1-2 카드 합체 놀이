@@ -1,0 +1,14 @@
+class Solution:
+    N, M = map(int, input().split()) #카드갯수, 병합수 순서대로 입력 받음
+    card_list = list(map(int, input().split())) #카드 리스트 입력
+
+    for _ in range(M):
+        card_list.sort()
+        merge = card_list[0]+card_list[1]
+        card_list[0], card_list[1] = merge, merge
+
+    print(sum(card_list))
+
+
+
+
