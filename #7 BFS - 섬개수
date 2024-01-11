@@ -1,0 +1,55 @@
+#bfs너비우선 탐색
+#검색
+#상하 좌우를 검색해줄 -> 배열이 필요 dx dy로 정의 를 하자 -> 순서대로 오 왼 상 하 로 넣어 줌 -> 굳이 배열이여야 할까? ->
+# ()로 묶어서 또 하나씩 뽑을 걸 생각하면 -> 배열이 제일 깔끔할 것 같다
+#입력
+#행과 열로 입력받자 행열의 정의-> 하나씩 받아들여야 하니까? for문 -> 이중
+#배열을 순서대로 넣어주기 -> 들어온 순서에서 제일 먼저 들어온 아이 -> deque를 사용
+#각 단계별로 que를 묶으려면
+from collections import deque
+
+
+def island_bfs(grid):
+    dx=[1,-1,0,0] #오 왼 상 하
+    dy=[0,0,1,-1]
+
+    rows=len(grid) #가로
+    cols=len(grid[0]) #새로
+    cnt=0#섬을 셈
+     #배열을 쪼개서 너비 탐색에서 앞에껄 뽑을 녀석
+
+    for row in range(rows):
+        for col in range(cols):
+            #막힌지점 row 와 col을 어디다 활용할지  표시를 못함 grid 안에다 표시 할것임을 잊지말자 여기서 데큐가 왜나오냐
+            if grid[row][col] != "1":
+                continue
+            cnt+=1 # 1이면 섬세기
+            q=deque([(row,col)]) # 기준이 됨으로 q데 담기
+
+            while q:
+                #상하 좌우 검색
+                pick=q.popleft() #여기에서 나오는 것 하나씩 꺼내서 검사
+                for i in range(4): #상하 좌우 니까 4번
+                    nx=dx[i]+pick[0]
+                    ny=dy[i]+pick[1]
+                    if nx < 0 or nx >= rows or ny < 0 or ny >= cols or grid[nx][ny] != '1':#예외처리
+                        continue
+                    grid[nx][ny]=='0' #아니라면 0,해당 좌표를 q에 붙여서 연관된 그리드 검사
+                    q.append((nx,ny))
+
+    return cnt
+
+
+if __name__ == "__main__":
+    assert island_bfs(grid=[
+        ["1", "1", "1", "1", "0"],
+        ["1", "1", "0", "1", "0"],
+        ["1", "1", "0", "0", "0"],
+        ["0", "0", "0", "0", "0"]
+    ]) == 1
+    assert island_bfs(grid=[
+        ["1", "1", "0", "0", "0"],
+        ["1", "1", "0", "0", "0"],
+        ["0", "0", "1", "0", "0"],
+        ["0", "0", "0", "1", "1"]
+    ]) == 3
