@@ -13,8 +13,8 @@ def island_bfs(grid):
     dx=[1,-1,0,0] #오 왼 상 하
     dy=[0,0,1,-1]
 
-    rows=len(grid) #가로
-    cols=len(grid[0]) #새로
+    rows=len(grid) #세로
+    cols=len(grid[0]) #가로
     cnt=0#섬을 셈
      #배열을 쪼개서 너비 탐색에서 앞에껄 뽑을 녀석
 
@@ -24,7 +24,7 @@ def island_bfs(grid):
             if grid[row][col] != "1":
                 continue
             cnt+=1 # 1이면 섬세기
-            q=deque([(row,col)]) # 기준이 됨으로 q데 담기
+            q=deque([(row,col)]) # 기준이 됨으로 q에 담기
 
             while q:
                 #상하 좌우 검색
