@@ -1,0 +1,35 @@
+#노드 수 간선 수를 받기
+#노드는 이중간선으로 받아서 비교하기
+#시작점부터 넣어주기
+#
+n , m, start=  map(int, input().split())
+graph = [[] for _ in range(n + 1)]
+nodes = map(int, input().split())
+result=[]
+
+for _ in range(m):#이중 간선 구현
+    index, next=map(int, input().split())
+    graph[index].append(next)
+    graph[next].append(index)
+#ex) 1:[2,3], 2:[1]
+
+for vals in graph.values():
+    vals.sort() #그래프 속성 value을 낱개로 오름차순정렬
+
+visited = [False] * (n + 1)
+visited[start] = True
+
+
+def dfs(node):
+    visited[node] = True
+    result.append(node)
+    for nxt in graph[node]:
+        if not visited[nxt]:
+            dfs(nxt)
+
+
+dfs(start)
+print(result)
+
+
+
