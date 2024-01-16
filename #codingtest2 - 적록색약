@@ -1,0 +1,77 @@
+from collections import deque
+
+
+N = int(input())
+
+grid = [list(input()) for _ in range(N)]
+
+def isRG_bfs(grid):
+    dx = [1, -1, 0, 0]  # 오른쪽, 왼쪽, 위, 아래
+    dy = [0, 0, 1, -1]
+
+    rows = len(grid)
+    cols = len(grid[0])
+    rgcnt = 0
+
+    for row in range(rows):
+        for col in range(cols):
+            if grid[row][col] == '0':
+                continue
+
+            rgcnt += 1
+            color = grid[row][col]
+            q = deque([(row, col)])
+
+            while q:
+                pick = q.popleft()
+                for i in range(4):
+                    nx = pick[0] + dx[i]
+                    ny = pick[1] + dy[i]
+                    if nx < 0 or nx >= rows or ny < 0 or ny >= cols:
+                        continue
+
+                    if color in ['R', 'G'] and grid[nx][ny] in ['R', 'G']: #오류 지점 두케이스 다 예외처리하니 풀림
+                        grid[nx][ny] = '0'
+                        q.append((nx, ny))
+                    elif color == 'B' and grid[nx][ny] == 'B':
+                        grid[nx][ny] = '0'
+                        q.append((nx, ny))
+
+    return rgcnt
+
+
+def isRGB_bfs(grid):
+    dx = [1, -1, 0, 0]  # 오른쪽, 왼쪽, 위, 아래
+    dy = [0, 0, 1, -1]
+
+    rows = len(grid)
+    cols = len(grid[0])
+    cnt = 0
+
+    for row in range(rows):
+        for col in range(cols):
+            if grid[row][col] == '0':
+                continue
+
+            cnt += 1
+            color = grid[row][col] #본지점 color를 바뀌도록 설정
+            q = deque([(row, col)])
+
+            while q:
+                pick =q.popleft()
+                for i in range(4):
+                    nx = pick[0] + dx[i]
+                    ny = pick[1] + dy[i]
+                    if nx < 0 or nx >= rows or ny < 0 or ny >= cols or grid[nx][ny] != color:
+                        continue
+                    grid[nx][ny] = '0'
+                    q.append((nx, ny))
+
+
+    return cnt
+
+rg_grid = [row[:] for row in grid]
+rgcnt = isRG_bfs(rg_grid)
+cnt = isRGB_bfs(grid)
+
+print(cnt, rgcnt)
