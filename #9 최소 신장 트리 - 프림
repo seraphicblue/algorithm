@@ -1,0 +1,29 @@
+def prim(n,edges):
+    import heapq
+
+    graph=[[] for _ in range(n + 1)]
+    for idx,adj,cost in edges:
+        graph[idx].append((cost,adj))
+        graph[adj].append((cost,idx))
+
+    visited = [False]*(n+1) #1부터 시작할거니까
+    visited[1] = True
+    heap = []
+    for cost,adj in graph[1]: #가장 낮은 비용부터
+        heapq.heappush(heap,(cost,adj))
+
+    result=0
+    used_edges=0
+    while used_edges< n - 1:
+        cost,idx = heapq.heappop(heap)
+        if visited[idx]:#방문한적 있으면
+            continue
+        #방문한 적 없으면
+        visited[idx] = True #방문으로 바꿔주기
+        result += cost
+        used_edges += 1
+        for adj_cost, adj in graph[idx]:#그래프의 인덱스에서
+            if not visited[adj]: #방문 x면 push
+                heapq.heappush(heap, (adj_cost, adj))
+
+        return result
