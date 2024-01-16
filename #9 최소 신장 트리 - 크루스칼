@@ -1,0 +1,43 @@
+#분리 집합
+#그래프가 유동적으로 변할 때 (간선 추가 삭제시) 점들간의 연결여부 빠르게 확인
+#부모 정점을 찾는 find와 서로 다른 부모 정점을 가지는 집합을 합치는 union함수로 이루어짐
+class DisjointSet():
+    def __init__(self,n):
+        self.parent = list(range(n))
+
+    def find(self,x):
+        if self.parent == x:
+            return x
+        self.parent[x] = self.find(self.parent[x]) #없으면 그다음으로 넘어가서 부모를 찾는다
+        return self.parent[x]
+
+    def union(self,x,y):
+        root_x = self.find(x)
+        root_y = self.find(y)
+        if root_x == root_y: #이미 같은 집합이므로 의미가 없음
+            return
+        self.parent[root_x] = root_y #같은 집합이 아니라면 두집합을 하나로 합침
+
+    def kruskal_custom(n,edges):
+        #n 정점의 개수 edges (정점1,정점2,가중치)의 리스트
+        edges.sort(key=lambda  x:x[2]) # 가중치가 낮은 순으로 정렬
+        disjoint_set = DisjointSet(n)
+        result = 0
+        used_edges= 0
+
+        for idx, adj, cost in edges:
+            #각 노드의 부모 노드 탐색
+            #사이클이 생기지 않는 다면 간선을 선택
+            #부모 노드가 같다 = 이 간선을 선택하면 사이클이 생긴다!
+            if disjoint_set.find(idx):
+                disjoint_set.union(idx, adj)
+                result += cost
+                used_edges += 1
+
+                if used_edges == n - 1:
+                    break
+        return result
+
+
+
+
