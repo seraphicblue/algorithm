@@ -1,0 +1,30 @@
+from collections import deque
+
+dx = [1, 1, 2, 2, -1, -1, -2, -2]
+dy = [2, -2, 1, -1, 2, -2, 1, -1]
+
+def bfs(bx_s, by_s, bx_e, by_e):
+    q = deque()
+    q.append([bx_s, by_s])
+    board[bx_s][by_s] = 1
+    while q:
+        x, y = q.popleft()
+        if x == bx_e and y == by_e: #끝에 다다르면
+            return board[x][y] - 1 #보드에서 1빼라 ? 왜 뺼까? 처음에 넣을때 1로 넣었으니까
+
+        for i in range(8):
+            nx = x + dx[i]
+            ny = y + dy[i]
+            if 0 <= nx < l and 0 <= ny < l and board[nx][ny] == 0: #현재 위치가 범위안에 있는가 방문x
+                    q.append([nx, ny])
+                    board[nx][ny] = board[x][y] + 1
+
+tc = int(input()) # 테스트 케이스 갯수
+while tc:
+    l = int(input()) # 체스 판 크기 l*l
+    board = [[0] * l for _ in range(l)] # 보드 0으로 초기화
+    s_x, s_y = map(int, input().split()) # 시작 위치
+    e_x, e_y = map(int, input().split()) # 목표 위치
+    go = bfs(s_x, s_y, e_x, e_y)
+    print(go)
+    tc -= 1
