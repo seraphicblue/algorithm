@@ -1,0 +1,11 @@
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        maxSub = nums[0] 
+        curSum = 0
+
+        for n in nums:
+            if curSum < 0: #부분집합의 합이 음수 면 0으로  초기화
+                curSum = 0
+            curSum += n 
+            maxSub = max(maxSub, curSum) #최대 값인지 비교 
+        return maxSub
