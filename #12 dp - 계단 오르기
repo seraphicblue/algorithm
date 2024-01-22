@@ -1,0 +1,14 @@
+class Solution:
+    @staticmethod
+    def climbStairs(n: int) -> int:
+        if n <= 2:
+            return n
+
+        dp_array = [0] * (n + 1)
+        dp_array[1] = 1
+        dp_array[2] = 2 #처음 2계단 이나 1계단 까지 올라갈수 있음 
+
+        for i in range(3, n + 1): #3번째 부터 한번에 올라갈수 없으므로 계산 
+            dp_array[i] = dp_array[i - 1] + dp_array[i - 2]
+
+        return dp_array[n]
