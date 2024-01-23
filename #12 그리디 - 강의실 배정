@@ -1,0 +1,47 @@
+import heapq
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+times = []
+for _ in range(n):
+    times.append(list(map(int, input().split())))
+
+times.sort()
+
+# 루트 노드 설정
+heap = []
+heapq.heappush(heap, times[0][1])
+
+for i in range(1, n):
+    # 가장 빠른 수업 종료 시간보다 다음 수업 시작 시간이 느리면
+    if heap[0] <= times[i][0]:
+        # 기존 수업에 이어서 진행 가능하므로 pop
+        heapq.heappop(heap)
+    # 신규 수업 생성
+    heapq.heappush(heap, times[i][1])
+
+print(len(heap))
+
+
+<틀린코드>
+lec_cnt = int(input())  # 강의실 수
+room_lst = []
+
+for _ in range(lec_cnt):
+    start, end = map(int, input().split())  # 강의 시작, 끝 시간
+    room_lst.append((start, end))
+
+# 강의 시작 시간을 기준으로 한 번만 정렬
+room_lst.sort(key=lambda x: x[0])
+
+# 첫 강의는 항상 배정됨
+room_cnt = 1
+pick = room_lst[0][1]
+
+for i in range(1, lec_cnt):
+    if pick <= room_lst[i][0]:  # 현재 강의의 시작 시간이 이전 강의의 종료 시간 이후인 경우
+        room_cnt += 1
+        pick = room_lst[i][1]  # 종료 시간 업데이트
+
+print(room_cnt)
