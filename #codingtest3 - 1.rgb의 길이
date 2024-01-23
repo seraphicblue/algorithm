@@ -1,0 +1,15 @@
+n = int(input())
+array = [list(map(int, input().split())) for _ in range(n)]
+
+dypr = [[0]*3 for _ in range(n)]
+
+for i in range(n):
+    if i == 0:
+        dypr[i] = array[i]  # 첫 행은 비용 그대로
+        #결국 이전에 사용했던거 빼고 둘중 가장 저렴한 것을 선택
+   # 현재 열을 제외한 이전 행의 열들 중 최솟값 + 현재 칸 비용
+    dypr[i][0] = min(dypr[i-1][1], dypr[i-1][2]) + array[i][0]
+    dypr[i][1] = min(dypr[i-1][0], dypr[i-1][2]) + array[i][1]
+    dypr[i][2] = min(dypr[i-1][0], dypr[i-1][1]) + array[i][2]
+
+print(min(dypr[n-1]))  # 마지막 집까지 칠한 최소 비용
