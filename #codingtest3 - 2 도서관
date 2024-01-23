@@ -1,0 +1,38 @@
+
+
+
+n = int(input())  # 책의 갯수
+m = int(input())  # 한꺼번에 들수있는 최대 책의 갯수
+book_lst = list(map(int, input().split()))  # 책 위치 입력 받기
+minus_lst = []  # 음의 리스트
+plus_lst = []  # 양의 리스트
+crt_len = 0  # 현재 길이
+last = 0 # 가장 멀리 있는 책 위치
+for x in book_lst:
+    if x < 0:
+        minus_lst.append(abs(x))
+    elif x > 0:
+        plus_lst.append(x)
+
+minus_lst.sort(reverse=True) #둘다 높은것부터 나열
+plus_lst.sort(reverse=True)
+
+if minus_lst:
+    last = max(last, minus_lst[0])
+if plus_lst:
+    last = max(last, plus_lst[0])
+
+
+for i in range(0, len(minus_lst), m):
+    if i < len(minus_lst):
+        crt_len += minus_lst[i] * 2
+
+
+for i in range(0, len(plus_lst), m):
+    if i < len(plus_lst):
+        crt_len += plus_lst[i] * 2
+
+
+crt_len -= last #마지막에 두번 뺸건 한번만 빼기 돌아오지 않아도 되니까
+
+print(crt_len)
