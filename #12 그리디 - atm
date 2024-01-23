@@ -1,0 +1,12 @@
+n = int(input())  # 사람 수
+time_list = list(map(int, input().split()))  
+
+
+time_list.sort()
+
+
+sum_time = 0
+for i in range(n):
+    sum_time += (n - i) * time_list[i]
+
+print(sum_time)  
