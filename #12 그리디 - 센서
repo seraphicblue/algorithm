@@ -1,0 +1,22 @@
+#문제이해가 너무 어렵다 
+#n개의 센서들을 k묶음으로 나눈후 그안에서 n개의 거리가 가장 작은 경우 거리들을 합산하는 문제
+#센서를 나열하고 센서를 뒤에서 앞으로 빼서  다시 배열을 생성한후
+#오름차순으로 나열 그안에서 n-k개 만큼뺀다
+import sys
+
+input = sys.stdin.readline
+
+n = int(input())
+k = int(input())
+
+arr = list(map(int, input().split()))
+
+arr.sort()
+length = []
+
+for i in range(len(arr)-1):
+    length.append(arr[i+1] - arr[i])
+    
+length.sort()
+
+print(sum(length[:n-k]))
