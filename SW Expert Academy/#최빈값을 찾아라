@@ -1,0 +1,19 @@
+T = int(input())
+
+for t in range(T):
+    tcase = int(input())
+    score_list = [0 for _ in range(101)]
+
+    scores = list(map(int, input().split()))
+
+    for score in scores:
+        score_list[score] += 1
+
+    max_num = 0
+    max_count = 0
+
+    for idx, score in enumerate(score_list):
+        if max_count <= score:
+            max_count = score
+            max_num = idx
+    print(f'#{tcase} {max_num}')
